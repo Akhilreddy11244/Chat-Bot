@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ChatBotUi {
-
     private JFrame frame;
     private JTextArea chatArea;
     private JTextField inputField;
@@ -32,10 +31,26 @@ public class ChatBotUi {
 
         inputField = new JTextField();
         sendButton = new JButton("Send");
+       
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(e -> {
+            int choice = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Are you sure you want to logout?",
+                    "Logout",
+                    JOptionPane.YES_NO_OPTION
+            );
 
+            if (choice == JOptionPane.YES_OPTION) {
+                frame.dispose();          // Close chatbot window
+                new LoginUi();            // Return to login screen
+            }
+        });
         JPanel bottom = new JPanel(new BorderLayout());
         bottom.add(inputField, BorderLayout.CENTER);
         bottom.add(sendButton, BorderLayout.EAST);
+        bottom.add(logoutButton, BorderLayout.WEST);
+
 
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(bottom, BorderLayout.SOUTH);
@@ -57,10 +72,8 @@ public class ChatBotUi {
 
         sendButton.addActionListener(sendListener);
         inputField.addActionListener(sendListener);
-
         frame.setVisible(true);
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(ChatBotUi::new);
     }
